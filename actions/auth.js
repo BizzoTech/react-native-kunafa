@@ -87,7 +87,9 @@ export const userLogout = () => {
     });
     RNKunafa.logout();
     RNKunafa.onLogout(() => {
-      RNRestart.Restart();
+      dispatch({
+        type: 'LOGOUT'
+      })
     })
   }
 

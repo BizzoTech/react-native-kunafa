@@ -17,6 +17,25 @@ const {
 
 import RNKunafa from '../RNKunafa';
 
+const getCredentials = async() => {
+  const data = await AccessToken.getCurrentAccessToken();
+  const response = await fetch(`http://${RNKunafa.host}/facebook`, {
+    method: 'POST',
+    body: JSON.stringify({accessToken: data.accessToken.toString()}),
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+  });
+  if (response.status == 200) {
+      return response.json();
+  } else {
+      console.log(response);
+      throw new Error("Login Error");
+  }
+}
+
+
 const FBLogin = React.createClass({
 	onLoginFinished(error, result){
 		if (error || result.isCancelled) {
@@ -25,31 +44,12 @@ const FBLogin = React.createClass({
 			//alert("Login was successful with permissions: " + result.grantedPermissions)
 			//console.log(result);
 			this.props.startLoading();
-			AccessToken.getCurrentAccessToken().then(data => {
-				//alert(data.accessToken.toString())
-				return fetch(`http://${RNKunafa.host}/facebook`, {
-					method: 'POST',
-					body: JSON.stringify({accessToken: data.accessToken.toString()}),
-					headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/json'
-					}
-				}).then(function(response) {
-						//console.log(response);
-						if (response.status == 200) {
-								return response.json();
-						} else {
-								console.log(response);
-								throw new Error("Login Error");
-						}
-				}).then(response => {
-					//console.log(response);
-					return this.props.userLogin(response.name, response.password);
-				})
-			}).catch(err => {
+      getCredentials().then(creds => {
+        this.props.userLogin(creds.name, creds.password);
+      }).catch(err => {
 				alert("Error while login, please try again later");
 				LoginManager.logOut();
-				//this.props.resetHistory();
+				this.props.resetHistory();
 			});
 		}
 	},

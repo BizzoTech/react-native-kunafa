@@ -37,6 +37,8 @@ export default (profileId) => {
       case 'SKIP_LOGIN':
       case 'LOGIN':
         return startWithMenu;
+      case 'LOGOUT':
+        return startWithLogin;
       default:
         return state
     }

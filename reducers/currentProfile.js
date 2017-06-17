@@ -12,6 +12,11 @@ export default (profileId) => {
           ...state,
           _id: action.profileId
         }
+      case 'LOGOUT':
+        return {
+          ...state,
+          _id: undefined
+        }
       default:
         return state;
     }
