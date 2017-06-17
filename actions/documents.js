@@ -1,4 +1,4 @@
-import RNKunafa from './RNKunafa';
+import RNKunafa from '../RNKunafa';
 
 export const loadDocs = (query, overrideAction = {}) => dispatch => {
   return RNKunafa.publicDb.find(query).then(result => {
