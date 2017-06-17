@@ -184,29 +184,35 @@ public class NotificationService extends IntentService{
   @Override
   protected void onHandleIntent(Intent intent) {
       final Context cont = this;
-      SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
-      host = sharedpreferences.getString("host", null);
-      if(host == null){
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
+      try{
+          Thread.sleep(1000);
+      }catch(InterruptedException e){
 
-        }
-        return;
       }
-      localUsername = sharedpreferences.getString("localUsername", "kunafa");
-      localPassword = sharedpreferences.getString("localPassword", "kunafa");
-			startCBLite();
       while(true){
-          if(!host.equals(sharedpreferences.getString("host", null))){
-            return;
+          SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+          host = sharedpreferences.getString("host", null);
+          localUsername = sharedpreferences.getString("localUsername", "kunafa");
+          localPassword = sharedpreferences.getString("localPassword", "kunafa");
+          if(host == null || !host.equals(sharedpreferences.getString("host", null))){
+            try{
+                Thread.sleep(100);
+            }catch(InterruptedException e){
+
+            }
+            continue;
           }
-          if(!localUsername.equals(sharedpreferences.getString("localUsername", null))){
-            return;
+          if(localUsername == null || !localUsername.equals(sharedpreferences.getString("localUsername", null))){
+            continue;
           }
-          if(!localPassword.equals(sharedpreferences.getString("localPassword", null))){
-            return;
+          if(localPassword == null || !localPassword.equals(sharedpreferences.getString("localPassword", null))){
+            continue;
           }
+
+          if(liteListener == null){
+            startCBLite();
+          }
+
           try{
               Thread.sleep(1000);
           }catch(InterruptedException e){
