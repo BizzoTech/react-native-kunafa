@@ -8,5 +8,7 @@ import createApp from './createApp';
 import createStore from './createStore';
 import actions from './actions';
 
+import FBLogin from './components/FBLogin';
+
 export default RNKunafa;
-export {createApp, createStore, actions};
+export {createApp, createStore, actions, FBLogin};
