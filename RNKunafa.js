@@ -3,9 +3,6 @@ import {
 	NativeModules
 } from 'react-native';
 
-import PouchDB from 'pouchdb';
-PouchDB.plugin(require('pouchdb-find'));
-
 const RNKunafa = NativeModules.RNKunafa;
 
 RNKunafa.onListnerStarted = cb => {
@@ -33,13 +30,5 @@ RNKunafa.onLogout = cb => {
 	});
 }
 
-RNKunafa.init = (host, localUserName, localPassword) => {
-  RNKunafa.publicDb = new PouchDB(`http://${host}/public`, {
-		ajax: {
-			timeout: 60000
-		}
-	});
-  return NativeModules.RNKunafa.init(host, localUserName, localPassword);
-}
 
 export default RNKunafa;

@@ -9,6 +9,9 @@ const {
 	LoginManager
 } = FBSDK;
 
+import PouchDB from 'pouchdb';
+PouchDB.plugin(require('pouchdb-find'));
+
 import RNKunafa from './RNKunafa';
 import createStore from './createStore';
 
@@ -17,6 +20,11 @@ import AppContainer from './AppContainer';
 export default (name, MAIN, appConfig) => {
   const {host, localUsername, localPassword} = appConfig;
   RNKunafa.init(host, localUsername, localPassword);
+  RNKunafa.publicDb = new PouchDB(`http://${host}/public`, {
+		ajax: {
+			timeout: 60000
+		}
+	});
   let AppStore = null;
   const App = React.createClass({
       getInitialState :function() {
