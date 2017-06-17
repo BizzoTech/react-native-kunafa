@@ -20,6 +20,7 @@ import AppContainer from './AppContainer';
 export default (name, MAIN, appConfig) => {
   const {host, localUsername, localPassword} = appConfig;
   RNKunafa.init(host, localUsername, localPassword);
+  RNKunafa.host = host;
   RNKunafa.publicDb = new PouchDB(`http://${host}/public`, {
 		ajax: {
 			timeout: 60000
