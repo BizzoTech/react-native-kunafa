@@ -11,6 +11,9 @@ export default function(state = defaultState, action) {
       return R.assoc(action.doc._id, action.doc, state);
     case 'REMOVE_EVENT':
       return R.dissoc(action.doc._id, state);
+    case 'LOGIN':
+    case 'LOGOUT':
+      return defaultState;
     default:
       return state;
   }

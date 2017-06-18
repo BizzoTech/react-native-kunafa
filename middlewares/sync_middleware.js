@@ -2,6 +2,8 @@ import R from 'ramda';
 import {
 	InteractionManager
 } from 'react-native';
+import PouchDB from 'pouchdb';
+PouchDB.plugin(require('pouchdb-find'));
 
 const getDefaultAction = act => {
   let action = act;
@@ -15,22 +17,21 @@ const getDefaultAction = act => {
   }
 }
 
-export default (db, paths) => store => next => {
-  //Initial Load docs to improve render performance by tracking new changes only
-  db.allDocs({
+const initialLoad = async(db, paths, dispatch) => {
+  const result = await db.allDocs({
     include_docs: true
-  }).then(result => {
-    paths.forEach(path => {
-      if (path.actions.load) {
-        next({
-          type: path.actions.load,
-          [path.name]: result.rows.map(r => r.doc).filter(path.filter)
-        })
-      }
-    })
-
+  });
+  paths.forEach(path => {
+    if (path.actions.load) {
+      dispatch({
+        type: path.actions.load,
+        [path.name]: result.rows.map(r => r.doc).filter(path.filter)
+      })
+    }
   })
+}
 
+const syncChanges = (db, paths, store, dispatch) => {
   const changes = db.changes({
     since: 'now',
     live: true,
@@ -44,7 +45,7 @@ export default (db, paths) => store => next => {
       //console.log(change)
       if (change.doc._deleted) {
 				InteractionManager.runAfterInteractions(() => {
-					next({
+					dispatch({
 	          type: getDefaultAction(path.actions.remove),
 	          doc: change.doc
 	        });
@@ -54,7 +55,7 @@ export default (db, paths) => store => next => {
       const pathState = store.getState()[path.name];
       if (pathState[change.doc._id]) {
           InteractionManager.runAfterInteractions(() => {
-            next({
+            dispatch({
               type: getDefaultAction(path.actions.update),
               doc: change.doc
             });
@@ -62,7 +63,7 @@ export default (db, paths) => store => next => {
         return;
       } else {
         InteractionManager.runAfterInteractions(() => {
-          next({
+          dispatch({
             type: getDefaultAction(path.actions.insert),
             doc: change.doc
           });
@@ -72,6 +73,22 @@ export default (db, paths) => store => next => {
 
     });
   });
+  return changes;
+}
+
+export default (localListnerUrl, paths) => store => next => {
+
+  const dbName = store.getState().currentProfile._id || "anonymous";
+  const localDbUrl = localListnerUrl + dbName;
+	let db = new PouchDB(localDbUrl, {
+		ajax: {
+			timeout: 60000
+		}
+	});
+  //Initial Load docs to improve render performance by tracking new changes only
+  initialLoad(db, paths, next);
+
+  let changes = syncChanges(db, paths, store, next);
 
   const getDocs = (state, action) => [action.doc];
   const mergedActions = {
@@ -155,6 +172,21 @@ export default (db, paths) => store => next => {
 			});
 		} else{
 			next(action);
+
+      if(action.type === 'LOGIN' || action.type === 'LOGOUT'){
+        changes.cancel();
+        const dbName = store.getState().currentProfile._id || "anonymous";
+        const localDbUrl = localListnerUrl + dbName;
+      	db = new PouchDB(localDbUrl, {
+      		ajax: {
+      			timeout: 60000
+      		}
+      	});
+        //Initial Load docs to improve render performance by tracking new changes only
+        initialLoad(db, paths, next);
+
+        changes = syncChanges(db, paths, store, next);
+      }
 		}
   }
 }
