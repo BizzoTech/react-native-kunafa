@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
-import leftPad from 'left-pad';
 import R from 'ramda';
 
 import {
@@ -45,9 +44,9 @@ export default (localOnlyActions, needLocalProcessing, getActionPreProcessors, g
     const shouldWaitForOtherAction = relevantDocsIds.some(docId => localProcessingDocumentsIds.includes(docId));
 
     const localOnly = needLocalProcessing(action) || shouldWaitForOtherAction;
-
+    const _id = state.currentProfile._id ? `${state.currentProfile._id}-${Date.now()}-${action.type}` : `anonymous-${info.device_unique_id}-${Date.now()}-${action.type}`;
     return {
-      _id: (state.currentProfile._id || "anonymous") + "_action_" + leftPad(events_size, 7, '0') + "_" + action.type + "_" + uuid.v4(),
+      _id,
       type: "EVENT",
       draft: "true",
       localOnly: localOnly ? "true" : undefined,
