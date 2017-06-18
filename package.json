@@ -13,19 +13,20 @@
     "pouchdb-find": "^6.2.0",
     "ramda": "^0.23.0",
     "react-native-device-info": "^0.9.7",
-    "react-native-fabric": "^0.4.1",
-    "react-native-fbsdk": "^0.6.0",
-    "react-native-i18n": "^1.0.0",
     "react-native-popup-dialog": "^0.7.29",
     "react-native-progress": "^3.2.1",
     "react-native-simple-store": "^1.2.0",
-    "react-redux": "^5.0.5",
     "react-timer-mixin": "^0.13.3",
-    "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "reselect-map": "^1.0.1",
     "util": "^0.10.3",
     "uuid": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react-native": "^0.44.0",
+    "react-native-fbsdk": "^0.6.0",
+    "redux": "^3.6.0",
+    "react-redux": "^5.0.0"
   }
 }
