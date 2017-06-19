@@ -4,6 +4,8 @@ import events from './events';
 import createDocumentsReducer from './documents';
 import processing_local from './processing_local';
 import dialog from './dialog';
+import docLoaders from './docLoaders';
+
 
 export default config => {
   const currentProfile = createCurrentProfileReducer(config.profileId);
@@ -15,6 +17,7 @@ export default config => {
     events,
 		documents,
 		processing_local,
-    dialog
+    dialog,
+    docLoaders
   }
 }

@@ -38,3 +38,40 @@ export const reLoadDoc = (doc, overrideAction = {}) => dispatch => {
     }
   }, overrideAction));
 }
+
+
+export const createDocLoader = (loaderName, query) => {
+  return {
+    type: 'CREATE_DOCS_LOADER',
+    loaderName,
+    query
+  }
+}
+
+export const loadMoreDocs = loaderName => (dispatch, getState) => {
+  const loaderState = getState().docLoaders[loaderName];
+  if (loaderState) {
+    const {
+      query,
+      loaded,
+      endReached
+    } = loaderState;
+    if (endReached) {
+      return;
+    }
+
+    dispatch(loadDocs({ ...query,
+      skip: loaded > 0 ? loaded : undefined
+    }, {
+      loaderName
+    }));
+  }
+}
+
+export const refreshLoader = loaderName => dispatch => {
+  dispatch({
+    type: 'REFRESH_LOADER',
+    loaderName
+  });
+  dispatch(loadMoreDocs(loaderName));
+}

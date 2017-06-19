@@ -12,7 +12,6 @@
     "pouchdb": "^6.2.0",
     "pouchdb-find": "^6.2.0",
     "ramda": "^0.23.0",
-
     "react-native-popup-dialog": "^0.7.29",
     "react-native-progress": "^3.2.1",
     "react-native-simple-store": "^1.2.0",
