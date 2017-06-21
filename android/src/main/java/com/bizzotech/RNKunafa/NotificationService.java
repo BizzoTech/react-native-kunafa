@@ -195,6 +195,10 @@ public class NotificationService extends IntentService{
     localPassword = BuildConfig.LOCAL_PASSWORD;
     startCBLite();
     while(true){
+      try{
+        Thread.sleep(1000);
+      }catch(InterruptedException e){
+      }
       SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       if(sharedpreferences.getString("loggedIn", "false").equals("true")){
         dbUrl = "http://" + host + "/db";
