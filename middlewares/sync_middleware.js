@@ -177,7 +177,7 @@ export default (localListnerUrl, paths) => store => next => {
       if(action.type === 'LOGIN' || action.type === 'LOGOUT'){
         changes.cancel();
         const dbName = store.getState().currentProfile._id || "anonymous";
-        const localDbUrl = localListnerUrl + dbName;
+        const localDbUrl = localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
       	db = new PouchDB(localDbUrl, {
       		ajax: {
       			timeout: 60000
