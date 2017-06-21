@@ -182,9 +182,15 @@ public class NotificationService extends IntentService{
    }
 
   @Override
-  protected void onHandleIntent(Intent intent) {    
+  protected void onHandleIntent(Intent intent) {
     final Context cont = this;
-    host = BuildConfig.HOST;
+    host = (String) StaticValues.getBuildConfigValue(this, "HOST");
+    if(host == null){
+      Log.e("RNKunafa", "Host can't be null");
+      Log.e("ReactNative", "Host can't be null");
+      Log.e("ReactNativeJS", "Host can't be null");
+      return;
+    }
     localUsername = BuildConfig.LOCAL_USERNAME;
     localPassword = BuildConfig.LOCAL_PASSWORD;
     startCBLite();

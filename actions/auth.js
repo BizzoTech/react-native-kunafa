@@ -1,6 +1,8 @@
 import RNKunafa from '../RNKunafa';
 import Config from 'react-native-config';
 
+console.log("Host : " + Config.HOST);
+
 import {
   reLoadDoc
 } from './documents';
