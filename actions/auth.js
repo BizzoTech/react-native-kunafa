@@ -1,4 +1,5 @@
 import RNKunafa from '../RNKunafa';
+import Config from 'react-native-config';
 
 import {
   reLoadDoc
@@ -44,12 +45,12 @@ const fetchUser = async(hostUrl, user_id) => {
 }
 
 const auth = async(name, password) => {
-  const session = await login(`http://${RNKunafa.host}`, {
+  const session = await login(`http://${Config.host}`, {
     name,
     password
   });
   const userId = 'org.couchdb.user:' + session.name;
-  return await fetchUser(`http://${RNKunafa.host}`, userId);
+  return await fetchUser(`http://${Config.host}`, userId);
 }
 
 export const startLoading = () => {

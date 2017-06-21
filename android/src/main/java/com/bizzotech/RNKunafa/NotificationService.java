@@ -182,70 +182,41 @@ public class NotificationService extends IntentService{
    }
 
   @Override
-  protected void onHandleIntent(Intent intent) {
-      final Context cont = this;
-      try{
-          Thread.sleep(1000);
-      }catch(InterruptedException e){
-
+  protected void onHandleIntent(Intent intent) {    
+    final Context cont = this;
+    host = BuildConfig.HOST;
+    localUsername = BuildConfig.LOCAL_USERNAME;
+    localPassword = BuildConfig.LOCAL_PASSWORD;
+    startCBLite();
+    while(true){
+      SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
+      if(sharedpreferences.getString("loggedIn", "false").equals("true")){
+        dbUrl = "http://" + host + "/db";
+      } else {
+        dbUrl = "http://" + host+ "/anonymous";
       }
-      while(true){
-          SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
-          host = sharedpreferences.getString("host", null);
-          localUsername = sharedpreferences.getString("localUsername", "kunafa");
-          localPassword = sharedpreferences.getString("localPassword", "kunafa");
-          if(host == null || !host.equals(sharedpreferences.getString("host", null))){
-            try{
-                Thread.sleep(100);
-            }catch(InterruptedException e){
-
-            }
-            continue;
-          }
-          if(localUsername == null || !localUsername.equals(sharedpreferences.getString("localUsername", null))){
-            continue;
-          }
-          if(localPassword == null || !localPassword.equals(sharedpreferences.getString("localPassword", null))){
-            continue;
-          }
-
-          if(liteListener == null){
-            startCBLite();
-          }
-
-          try{
-              Thread.sleep(1000);
-          }catch(InterruptedException e){
-
-          }
-
-          if(sharedpreferences.getString("loggedIn", "false").equals("true")){
-            dbUrl = "http://" + host + "/db";
-          } else {
-            dbUrl = "http://" + host+ "/anonymous";
-          }
-          username = sharedpreferences.getString("username", "");
-          password = sharedpreferences.getString("password", "");
-          dbName = sharedpreferences.getString("profileId", "anonymous");
-          if(syncingWith == null || !syncingWith.equals(dbName)){
-    				stopSyncing();
-            startSyncing();
-          }
-
-
-          if(StaticValues.REACT_CONTEXT != null){
-            StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-             .emit("LOGGED_IN", sharedpreferences.getString("loggedIn", "false"));
-          }
-          if(StaticValues.REACT_CONTEXT != null && liteListener != null){
-            StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-             .emit("LISTNETR_STARTED", port);
-          }
-          if(StaticValues.REACT_CONTEXT != null && liteListener == null){
-            StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-             .emit("LISTNETR_STOPPED", null);
-          }
+      username = sharedpreferences.getString("username", "");
+      password = sharedpreferences.getString("password", "");
+      dbName = sharedpreferences.getString("profileId", "anonymous");
+      if(syncingWith == null || !syncingWith.equals(dbName)){
+				stopSyncing();
+        startSyncing();
       }
+
+
+      if(StaticValues.REACT_CONTEXT != null){
+        StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+         .emit("LOGGED_IN", sharedpreferences.getString("loggedIn", "false"));
+      }
+      if(StaticValues.REACT_CONTEXT != null && liteListener != null){
+        StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+         .emit("LISTNETR_STARTED", port);
+      }
+      if(StaticValues.REACT_CONTEXT != null && liteListener == null){
+        StaticValues.REACT_CONTEXT.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+         .emit("LISTNETR_STOPPED", null);
+      }
+    }
   }
 
   protected void showToast(final String msg){

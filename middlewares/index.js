@@ -1,4 +1,5 @@
 import R from 'ramda';
+import Config from 'react-native-config';
 
 import createSyncMiddleware from './sync_middleware';
 import createEventSourcingMiddleware from './event_sourcing_middleware';
@@ -6,8 +7,8 @@ import createLocalCacheMiddleware from './local_cache_middleware';
 import createProcessLocalEventsMiddleware from './process_local_events_middleware';
 
 export default config => {
-  const localUsername = config.localUsername || "kunafa";
-  const localPassword = config.localPassword || "kunafa";
+  const localUsername = Config.LOCAL_USERNAME;
+  const localPassword = Config.LOCAL_PASSWORD;
   const localListnerUrl = `http://${localUsername}:${localPassword}@127.0.0.1:${config.port}/`;
 
   const syncMiddleware = createSyncMiddleware(localListnerUrl, R.append({

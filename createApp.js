@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {DeviceEventEmitter, AppRegistry, View, Linking} from 'react-native';
 import {Provider} from 'react-redux';
+import Config from 'react-native-config';
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -18,9 +19,7 @@ import createStore from './createStore';
 import AppContainer from './AppContainer';
 
 export default (name, MAIN, appConfig) => {
-  const {host, localUsername, localPassword} = appConfig;
-  RNKunafa.init(host, localUsername, localPassword);
-  RNKunafa.host = host;
+  const host = Config.HOST;
   RNKunafa.publicDb = new PouchDB(`http://${host}/public`, {
 		ajax: {
 			timeout: 60000
@@ -28,7 +27,7 @@ export default (name, MAIN, appConfig) => {
 	});
   let AppStore = null;
   const App = React.createClass({
-      getInitialState :function() {
+      getInitialState() {
         return {
           splash : true,
   				listenerStarted: false,

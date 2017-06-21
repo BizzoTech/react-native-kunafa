@@ -19,6 +19,8 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        buildConfigField "string", "LOCAL_USERNAME", "\"kunafa\""
+        buildConfigField "string", "LOCAL_PASSWORD", "\"kunafa\""
     }
     buildTypes {
         release {

@@ -30,16 +30,6 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
     }
 
     @ReactMethod
-    public void init(String host, String localUsername, String localPassword) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
-      SharedPreferences.Editor editor = sharedpreferences.edit();
-      editor.putString("host", host);
-      editor.putString("localUsername", localUsername);
-      editor.putString("localPassword", localPassword);
-      editor.commit();
-    }
-
-    @ReactMethod
     public void login(String username, String password, String profileId) {
       SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();

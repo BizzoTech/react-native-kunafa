@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
 Dimensions,
 } from 'react-native';
+import Config from 'react-native-config';
 
 import { connect } from 'react-redux';
 import actions from '../actions';
@@ -19,7 +20,7 @@ import RNKunafa from '../RNKunafa';
 
 const getCredentials = async() => {
   const data = await AccessToken.getCurrentAccessToken();
-  const response = await fetch(`http://${RNKunafa.host}/facebook`, {
+  const response = await fetch(`http://${Config.host}/facebook`, {
     method: 'POST',
     body: JSON.stringify({accessToken: data.accessToken.toString()}),
     headers: {
