@@ -20,7 +20,7 @@ import RNKunafa from '../RNKunafa';
 
 const getCredentials = async() => {
   const data = await AccessToken.getCurrentAccessToken();
-  const response = await fetch(`http://${Config.host}/facebook`, {
+  const response = await fetch(`http://${Config.HOST}/facebook`, {
     method: 'POST',
     body: JSON.stringify({accessToken: data.accessToken.toString()}),
     headers: {

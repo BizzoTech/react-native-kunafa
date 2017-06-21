@@ -21,7 +21,6 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
         reactContext.addLifecycleEventListener(this);
 
-
     }
 
     @Override
@@ -31,7 +30,8 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void login(String username, String password, String profileId) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
+      String buildType = (String) StaticValues.getBuildConfigValue(getCurrentActivity(), "BUILD_TYPE");
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + buildType, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();
       editor.putString("loggedIn", "true");
       editor.putString("username", username);
@@ -42,7 +42,8 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void logout() {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
+      String buildType = (String) StaticValues.getBuildConfigValue(getCurrentActivity(), "BUILD_TYPE");
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + buildType, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();
       editor.putString("loggedIn", "false");
       editor.remove("username");
@@ -53,7 +54,8 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void getProfileId(Callback cb) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
+      String buildType = (String) StaticValues.getBuildConfigValue(getCurrentActivity(), "BUILD_TYPE");
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + buildType, Context.MODE_PRIVATE);
       cb.invoke(sharedpreferences.getString("profileId", null));
     }
 

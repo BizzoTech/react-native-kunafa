@@ -1,5 +1,10 @@
 import R from 'ramda';
 import Config from 'react-native-config';
+import {
+	DeviceEventEmitter,
+	NativeModules
+} from 'react-native';
+const RNKunafa = NativeModules.RNKunafa;
 
 import createSyncMiddleware from './sync_middleware';
 import createEventSourcingMiddleware from './event_sourcing_middleware';
@@ -7,8 +12,8 @@ import createLocalCacheMiddleware from './local_cache_middleware';
 import createProcessLocalEventsMiddleware from './process_local_events_middleware';
 
 export default config => {
-  const localUsername = Config.LOCAL_USERNAME;
-  const localPassword = Config.LOCAL_PASSWORD;
+  const localUsername = Config.LOCAL_USERNAME || "kunafa";
+  const localPassword = Config.LOCAL_PASSWORD || "kunafa";
   const localListnerUrl = `http://${localUsername}:${localPassword}@127.0.0.1:${config.port}/`;
 
   const syncMiddleware = createSyncMiddleware(localListnerUrl, R.append({

@@ -47,12 +47,12 @@ const fetchUser = async(hostUrl, user_id) => {
 }
 
 const auth = async(name, password) => {
-  const session = await login(`http://${Config.host}`, {
+  const session = await login(`http://${Config.HOST}`, {
     name,
     password
   });
   const userId = 'org.couchdb.user:' + session.name;
-  return await fetchUser(`http://${Config.host}`, userId);
+  return await fetchUser(`http://${Config.HOST}`, userId);
 }
 
 export const startLoading = () => {

@@ -51,6 +51,7 @@ import com.bizzotech.RNKunafa.StaticValues;
 
 public class NotificationService extends IntentService{
     String host;
+    String buildType;
     String localUsername;
     String localPassword;
 
@@ -98,7 +99,7 @@ public class NotificationService extends IntentService{
 					liteListener.start();
 					port = liteListener.getListenPort();
 
-          sharedDb = manager.getDatabase("shared" + "-" + BuildConfig.BUILD_TYPE);
+          sharedDb = manager.getDatabase("shared" + "-" + buildType);
           URL sharedDbUrl =  new URL("http://" + host + "/shared");
           sharedDbPull = sharedDb.createPullReplication(sharedDbUrl);
           sharedDbPull.setContinuous(true);
@@ -124,7 +125,7 @@ public class NotificationService extends IntentService{
 		}
 		private void startSyncing(){
       try{
-          db = manager.getDatabase(dbName + "-" + BuildConfig.BUILD_TYPE);
+          db = manager.getDatabase(dbName + "-" + buildType);
           db.setFilter("notLocal", new ReplicationFilter() {
               @Override
               public boolean filter(SavedRevision revision, Map<String, Object> params) {
@@ -185,21 +186,28 @@ public class NotificationService extends IntentService{
   protected void onHandleIntent(Intent intent) {
     final Context cont = this;
     host = (String) StaticValues.getBuildConfigValue(this, "HOST");
+    buildType = (String) StaticValues.getBuildConfigValue(this, "BUILD_TYPE");
     if(host == null){
       Log.e("RNKunafa", "Host can't be null");
       Log.e("ReactNative", "Host can't be null");
       Log.e("ReactNativeJS", "Host can't be null");
       return;
     }
-    localUsername = BuildConfig.LOCAL_USERNAME;
-    localPassword = BuildConfig.LOCAL_PASSWORD;
+    localUsername = (String) StaticValues.getBuildConfigValue(this, "LOCAL_USERNAME");
+    if(localUsername == null){
+      localUsername = "kunafa";
+    }
+    localPassword = (String) StaticValues.getBuildConfigValue(this, "LOCAL_PASSWORD");
+    if(localPassword == null){
+      localPassword = "kunafa";
+    }
     startCBLite();
     while(true){
       try{
         Thread.sleep(1000);
       }catch(InterruptedException e){
       }
-      SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
+      SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + buildType, Context.MODE_PRIVATE);
       if(sharedpreferences.getString("loggedIn", "false").equals("true")){
         dbUrl = "http://" + host + "/db";
       } else {
