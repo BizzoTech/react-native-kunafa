@@ -3,6 +3,7 @@ import {
   InteractionManager
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import Config from 'react-native-config';
 
 import R from 'ramda';
 
@@ -30,7 +31,8 @@ const info = {
   locale: DeviceInfo.getDeviceLocale(),
   country: DeviceInfo.getDeviceCountry(),
   timezone: DeviceInfo.getTimezone(),
-  emulator: DeviceInfo.isEmulator()
+  emulator: DeviceInfo.isEmulator(),
+  build_type: Config.BUILD_TYPE
 }
 
 export default (localOnlyActions, needLocalProcessing, getActionPreProcessors, getActionPostProcessors, getRelevantDocsIds) => {

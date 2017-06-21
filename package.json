@@ -23,7 +23,8 @@
     "uuid": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.44.0",
+    "react-native": "^0.45.0",
+    "react-native-config": "^0.4.2",
     "react-native-fbsdk": "^0.6.0",
     "react-native-device-info": "^0.10.0",
     "redux": "^3.6.0",

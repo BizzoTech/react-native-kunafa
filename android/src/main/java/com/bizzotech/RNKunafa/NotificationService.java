@@ -98,7 +98,7 @@ public class NotificationService extends IntentService{
 					liteListener.start();
 					port = liteListener.getListenPort();
 
-          sharedDb = manager.getDatabase("shared");
+          sharedDb = manager.getDatabase("shared" + "-" + BuildConfig.BUILD_TYPE);
           URL sharedDbUrl =  new URL("http://" + host + "/shared");
           sharedDbPull = sharedDb.createPullReplication(sharedDbUrl);
           sharedDbPull.setContinuous(true);
@@ -124,7 +124,7 @@ public class NotificationService extends IntentService{
 		}
 		private void startSyncing(){
       try{
-          db = manager.getDatabase(dbName);
+          db = manager.getDatabase(dbName + "-" + BuildConfig.BUILD_TYPE);
           db.setFilter("notLocal", new ReplicationFilter() {
               @Override
               public boolean filter(SavedRevision revision, Map<String, Object> params) {
@@ -190,7 +190,7 @@ public class NotificationService extends IntentService{
 
       }
       while(true){
-          SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+          SharedPreferences sharedpreferences = cont.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
           host = sharedpreferences.getString("host", null);
           localUsername = sharedpreferences.getString("localUsername", "kunafa");
           localPassword = sharedpreferences.getString("localPassword", "kunafa");

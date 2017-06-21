@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import PouchDB from 'pouchdb';
 PouchDB.plugin(require('pouchdb-find'));
+import Config from 'react-native-config';
 
 const getDefaultAction = act => {
   let action = act;
@@ -79,7 +80,7 @@ const syncChanges = (db, paths, store, dispatch) => {
 export default (localListnerUrl, paths) => store => next => {
 
   const dbName = store.getState().currentProfile._id || "anonymous";
-  const localDbUrl = localListnerUrl + dbName;
+  const localDbUrl = localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
 	let db = new PouchDB(localDbUrl, {
 		ajax: {
 			timeout: 60000

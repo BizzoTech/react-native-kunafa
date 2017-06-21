@@ -31,7 +31,7 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void init(String host, String localUsername, String localPassword) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();
       editor.putString("host", host);
       editor.putString("localUsername", localUsername);
@@ -41,7 +41,7 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void login(String username, String password, String profileId) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();
       editor.putString("loggedIn", "true");
       editor.putString("username", username);
@@ -52,7 +52,7 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void logout() {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       SharedPreferences.Editor editor = sharedpreferences.edit();
       editor.putString("loggedIn", "false");
       editor.remove("username");
@@ -63,7 +63,7 @@ public class RNKunafaModule extends ReactContextBaseJavaModule implements Lifecy
 
     @ReactMethod
     public void getProfileId(Callback cb) {
-      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa", Context.MODE_PRIVATE);
+      SharedPreferences sharedpreferences = reactContext.getSharedPreferences("RNKunafa-" + BuildConfig.BUILD_TYPE, Context.MODE_PRIVATE);
       cb.invoke(sharedpreferences.getString("profileId", null));
     }
 
