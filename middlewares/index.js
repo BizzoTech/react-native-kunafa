@@ -11,6 +11,8 @@ import createEventSourcingMiddleware from './event_sourcing_middleware';
 import createLocalCacheMiddleware from './local_cache_middleware';
 import createProcessLocalEventsMiddleware from './process_local_events_middleware';
 
+import eventChangeHandlerMiddleware from './event_change_handler_middleware';
+
 export default config => {
   const localUsername = Config.LOCAL_USERNAME || "kunafa";
   const localPassword = Config.LOCAL_PASSWORD || "kunafa";
@@ -35,5 +37,5 @@ export default config => {
 
   const processLocalEventsMiddleware = createProcessLocalEventsMiddleware(config.processLocalEvent);
 
-  return [processLocalEventsMiddleware, localCacheMiddleware, eventSourcingMiddleware, syncMiddleware];
+  return [processLocalEventsMiddleware, localCacheMiddleware, eventSourcingMiddleware, syncMiddleware, eventChangeHandlerMiddleware];
 }

@@ -18,14 +18,14 @@ const removeOldDocs = async (cacheDocTypes, cacheLimit, keepInCache, state) => {
 }
 
 export default (cacheDocTypes, cacheLimit, keepInCache) => store => next => {
-  InteractionManager.runAfterInteractions(async () => {
+  setTimeout(async () => {
     const keys = await SimpleStore.keys();
     const items = await SimpleStore.get(keys);
     next({
       type: 'LOAD_DOCS_FROM_CACHE',
       docs: items.filter(item => item && cacheDocTypes.includes(item.type))
     });
-  });
+  }, 200);
 
   return action => {
     let result = next(action);
