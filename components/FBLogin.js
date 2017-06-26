@@ -46,7 +46,7 @@ const FBLogin = React.createClass({
 			//console.log(result);
 			this.props.startLoading();
       getCredentials().then(creds => {
-        this.props.userLogin(creds.name, creds.password);
+        this.props.userLogin(creds.name, creds.password, creds.event);
       }).catch(err => {
 				alert("Error while login, please try again later");
 				LoginManager.logOut();

@@ -61,16 +61,21 @@ export const startLoading = () => {
   }
 }
 
-export const userLogin = (name, password) => {
+export const userLogin = (name, password, event) => {
   return dispatch => {
+
     dispatch({
       type: 'START_LOADING'
     })
     auth(name, password).then(user => {
       RNKunafa.login(name, password, user.profileId);
-      dispatch(reLoadDoc({
-        _id: user.profileId
-      }));
+      if(event){
+        dispatch(event.action);
+      } else {
+        dispatch(reLoadDoc({
+          _id: user.profileId
+        }));
+      }
       RNKunafa.onLogin(() => {
         dispatch({
           type: 'LOGIN',

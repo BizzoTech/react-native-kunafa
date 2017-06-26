@@ -65,7 +65,7 @@ export default (localOnlyActions, needLocalProcessing, getActionPreProcessors, g
 
   return store => next => action => {
 
-    if (!localOnlyActions.includes(action.type)) {
+    if (!localOnlyActions.includes(action.type) && action.type !== 'ADD_PROFILE') {
       InteractionManager.runAfterInteractions(() => {
         next({
           type: 'ADD_EVENT',
