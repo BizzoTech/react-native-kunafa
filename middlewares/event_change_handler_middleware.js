@@ -15,7 +15,7 @@ export default store => next => action => {
  }
 
  if (action.type === 'UPDATE_EVENT' || action.type === "ADD_EVENT") {
-  if (action.doc.appliedOn) {
+  if (!action.doc.draft && action.doc.appliedOn) {
    for (docId of Object.keys(action.doc.appliedOn)) {
     store.dispatch(reLoadDoc({_id: docId}));
    }
