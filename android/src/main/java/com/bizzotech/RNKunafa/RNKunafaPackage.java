@@ -11,6 +11,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
+import com.learnium.RNDeviceInfo.RNDeviceModule;
+
 
 public class RNKunafaPackage implements ReactPackage {
 
@@ -22,6 +24,7 @@ public class RNKunafaPackage implements ReactPackage {
         StaticValues.REACT_CONTEXT = reactContext;
 
         modules.add(new RNKunafaModule(reactContext));
+        modules.add(new RNDeviceModule(reactContext));
 
         return modules;
     }

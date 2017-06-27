@@ -12,6 +12,7 @@
     "pouchdb": "^6.2.0",
     "pouchdb-find": "^6.2.0",
     "ramda": "^0.23.0",
+    "react-native-device-info": "^0.10.0",
     "react-native-popup-dialog": "^0.7.29",
     "react-native-progress": "^3.2.1",
     "react-native-simple-store": "^1.2.0",
@@ -26,7 +27,6 @@
     "react-native": "^0.45.0",
     "react-native-config": "^0.4.2",
     "react-native-fbsdk": "^0.6.0",
-    "react-native-device-info": "^0.10.0",
     "redux": "^3.6.0",
     "react-redux": "^5.0.0"
   }
