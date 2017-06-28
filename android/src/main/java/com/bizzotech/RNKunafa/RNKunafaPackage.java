@@ -12,7 +12,7 @@ import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
 import com.learnium.RNDeviceInfo.RNDeviceModule;
-
+import com.lugg.ReactNativeConfig.ReactNativeConfigModule;
 
 public class RNKunafaPackage implements ReactPackage {
 
@@ -25,6 +25,7 @@ public class RNKunafaPackage implements ReactPackage {
 
         modules.add(new RNKunafaModule(reactContext));
         modules.add(new RNDeviceModule(reactContext));
+        modules.add(new ReactNativeConfigModule(reactContext));
 
         return modules;
     }
