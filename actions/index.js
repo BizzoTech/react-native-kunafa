@@ -1,11 +1,10 @@
+import kunafaActions from 'kunafa-client/actions';
+
 import * as authActions from './auth';
-import * as historyActions from './history';
-import * as dialogActions from './dialog';
 import * as documentsActions from './documents';
 
 export default {
+  ...kunafaActions,
   ...authActions,
-  ...historyActions,
-	...dialogActions,
   ...documentsActions
 }
