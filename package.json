@@ -7,6 +7,7 @@
     "blob-polyfill": "^1.0.20150320",
     "bluebird": "^3.4.7",
     "events": "^1.1.1",
+    "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#e7422b3eb72b3393242e98f45233fd446f53fc60",
     "moment": "^2.17.1",
     "pouchdb": "^6.2.0",
     "pouchdb-find": "^6.2.0",
