@@ -5,7 +5,8 @@ import Config from 'react-native-config';
 
 import R from 'ramda';
 
-import {eventsByRelevantDocSelector} from '../selectors';
+import kunafaSelectors from '../selectors';
+const {eventsByRelevantDocSelector} = kunafaSelectors;
 
 const info = {
  device_unique_id: DeviceInfo.getUniqueID(),
