@@ -8,22 +8,11 @@
     "bluebird": "^3.4.7",
     "events": "^1.1.1",
     "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#e7422b3eb72b3393242e98f45233fd446f53fc60",
-    "moment": "^2.17.1",
-    "pouchdb": "^6.2.0",
-    "pouchdb-find": "^6.2.0",
-    "ramda": "^0.24.0",
     "react-native-config": "^0.4.2",
     "react-native-device-info": "^0.10.0",
     "react-native-popup-dialog": "^0.7.29",
     "react-native-progress": "^3.2.1",
-    "react-native-simple-store": "^1.2.0",
-    "react-redux": "^5.0.5",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.1.0",
-    "reselect": "^3.0.1",
-    "reselect-map": "^1.0.3",
-    "util": "^0.10.3",
-    "uuid": "^3.0.0"
+    "react-native-simple-store": "^1.2.0"
   },
   "peerDependencies": {
     "react-native": ">=0.45.0",
