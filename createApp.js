@@ -15,6 +15,7 @@ PouchDB.plugin(require('pouchdb-find'));
 
 import RNKunafa from './RNKunafa';
 import createStore from './createStore';
+import actions from './actions';
 
 import AppContainer from './AppContainer';
 
@@ -22,6 +23,10 @@ export default (name, MAIN, appConfig) => {
   RNKunafa.appConfig = {
     ...appConfig,
     ...Config
+  }
+  RNKunafa.actions = {
+    ...actions,
+    ...appConfig.appActions
   }
   RNKunafa.AppStore = null;
   const App = React.createClass({
@@ -103,7 +108,7 @@ export default (name, MAIN, appConfig) => {
   			return (
   				<View style={{flex: 1, backgroundColor:"white"}}>
   					<Provider store={RNKunafa.AppStore}>
-              <AppContainer Main={MAIN} appConfig={RNKunafa.appConfig} store={RNKunafa.AppStore} />
+              <AppContainer Main={MAIN} />
             </Provider>
   				</View>
   			)

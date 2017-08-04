@@ -4,9 +4,8 @@ Dimensions,
 } from 'react-native';
 import Config from 'react-native-config';
 
-import { connect } from 'react-redux';
-import actions from '../actions';
-import { bindActionCreators } from 'redux';
+import connect from '../connect';
+
 const {height, width} = Dimensions.get('window');
 
 const FBSDK = require('react-native-fbsdk');
@@ -71,6 +70,4 @@ const FBLogin = React.createClass({
 });
 
 
-export default connect(null, dispatch => {
-	return bindActionCreators(actions, dispatch);
-})(FBLogin);
+export default connect(null)(FBLogin);

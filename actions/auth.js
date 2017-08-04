@@ -3,10 +3,6 @@ import Config from 'react-native-config';
 
 console.log("Host : " + Config.HOST);
 
-import {
-  reLoadDoc
-} from './documents';
-
 export const skipLogin = () => {
   return {
     type: 'SKIP_LOGIN'
@@ -72,7 +68,7 @@ export const userLogin = (name, password, event) => {
       if(event){
         dispatch(event.action);
       } else {
-        dispatch(reLoadDoc({
+        dispatch(RNKunafa.actions.reLoadDoc({
           _id: user.profileId
         }));
       }

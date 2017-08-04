@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-import {reLoadDoc} from '../actions/documents';
+import RNKunafa from '../RNKunafa';
 
 export default store => next => action => {
 
@@ -17,7 +17,7 @@ export default store => next => action => {
  if (action.type === 'UPDATE_EVENT' || action.type === "ADD_EVENT") {
   if (!action.doc.draft && action.doc.appliedOn) {
    for (docId of Object.keys(action.doc.appliedOn)) {
-    store.dispatch(reLoadDoc({_id: docId}));
+    store.dispatch(RNKunafa.actions.reLoadDoc({_id: docId}));
    }
   }
  }

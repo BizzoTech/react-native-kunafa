@@ -14,15 +14,14 @@ import * as Progress from 'react-native-progress';
 
 const {height, width} = Dimensions.get('window');
 
-import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import actions from './actions';
+import connect from './connect';
 
+import RNKunafa from './RNKunafa';
 
 const AppContainer = React.createClass({
 		renderActivityIndicator(){
-			const {processingLocal, appConfig, store} = this.props;
-			const color = appConfig.progressBarColor(store) //'#E91E62' // theme.color1;
+			const {processingLocal} = this.props;
+			const color = RNKunafa.appConfig.progressBarColor(RNKunafa.AppStore) //'#E91E62' // theme.color1;
 			if(processingLocal.isProcessing){
 				return <Progress.Bar color={color} progress={processingLocal.progress} indeterminate={!processingLocal.progress} width={Dimensions.get('window').width} />;
 			}
@@ -41,12 +40,12 @@ const AppContainer = React.createClass({
       }
     },
     renderDialogContent(){
-      const {dialog, closeDialog, appConfig} = this.props;
-      return appConfig.renderDialogContent(dialog, closeDialog);
+      const {dialog, closeDialog} = this.props;
+      return RNKunafa.appConfig.renderDialogContent(dialog, closeDialog);
     },
     render(){
-      const {Main, route, appConfig, store} = this.props;
-			const color = appConfig.statusBarColor(store)// '#E2004C'; // theme.color17;
+      const {Main, route} = this.props;
+			const color = RNKunafa.appConfig.statusBarColor(RNKunafa.AppStore)// '#E2004C'; // theme.color17;
       return (
         <View style={{flex: 1}}>
          <StatusBar
@@ -67,6 +66,4 @@ export default connect(state => {
       route: state.history[0],
 			dialog: state.dialog
     }
-}, (dispatch) => {
-    return bindActionCreators(actions, dispatch);
 })(AppContainer);
