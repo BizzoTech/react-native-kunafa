@@ -19,13 +19,11 @@ import createStore from './createStore';
 import AppContainer from './AppContainer';
 
 export default (name, MAIN, appConfig) => {
-  const host = Config.HOST;
-  RNKunafa.publicDb = new PouchDB(`http://${host}/public`, {
-		ajax: {
-			timeout: 60000
-		}
-	});
-  let AppStore = null;
+  RNKunafa.appConfig = {
+    ...appConfig,
+    ...Config
+  }
+  RNKunafa.AppStore = null;
   const App = React.createClass({
       getInitialState() {
         return {
@@ -54,30 +52,30 @@ export default (name, MAIN, appConfig) => {
               if(!profileId){
                 LoginManager.logOut();
               }
-  	          AppStore = createStore({...appConfig, profileId, port});
+  	          RNKunafa.AppStore = createStore({...RNKunafa.appConfig, profileId, port});
 
               setTimeout(()=>{
-                appConfig.initialFetch(AppStore);
+                RNKunafa.appConfig.initialFetch(RNKunafa.AppStore);
               }, 500);
 
 
               Linking.getInitialURL().then((url) => {
         				if (url) {
         					//console.log('Initial url is: ' + url);
-                  appConfig.handleDeepLink(url, AppStore);
+                  RNKunafa.appConfig.handleDeepLink(url, RNKunafa.AppStore);
         				}
         			}).catch(err => console.error('An error occurred', err));
         			Linking.addEventListener('url', this._handleOpenURL);
 
               DeviceEventEmitter.addListener("NotificationClick", docId => {
                 if(docId){
-                  appConfig.handleNotificationClick(docId, AppStore);
+                  RNKunafa.appConfig.handleNotificationClick(docId, RNKunafa.AppStore);
                 }
               });
               setTimeout(()=>{
                 RNKunafa.getInitialNotificationClickDocId(docId => {
                   if(docId){
-                    appConfig.handleNotificationClick(docId, AppStore);
+                    RNKunafa.appConfig.handleNotificationClick(docId, RNKunafa.AppStore);
                   }
                 })
               }, 500);
@@ -96,7 +94,7 @@ export default (name, MAIN, appConfig) => {
   		},
   		_handleOpenURL(event) {
   			//console.log(event.url);
-  			appConfig.handleDeepLink(event.url, AppStore);
+  			RNKunafa.appConfig.handleDeepLink(event.url, RNKunafa.AppStore);
   		},
   		render(){
   			if(this.state.splash){
@@ -104,8 +102,8 @@ export default (name, MAIN, appConfig) => {
   			}
   			return (
   				<View style={{flex: 1, backgroundColor:"white"}}>
-  					<Provider store={AppStore}>
-              <AppContainer Main={MAIN} appConfig={appConfig} store={AppStore} />
+  					<Provider store={RNKunafa.AppStore}>
+              <AppContainer Main={MAIN} appConfig={RNKunafa.appConfig} store={RNKunafa.AppStore} />
             </Provider>
   				</View>
   			)
