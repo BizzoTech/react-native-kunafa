@@ -20,36 +20,51 @@ import connect from './connect';
 import RNKunafa from './RNKunafa';
 
 class AppContainer extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      splash: true
+    }
+  }
   componentDidMount = () => {
     Linking.getInitialURL().then((url) => {
       if (url) {
-        RNKunafa.appConfig.handleDeepLink(url, RNKunafa.AppStore);
+        this._handleOpenURL({url});
       }
     }).catch(err => console.error('An error occurred', err));
     Linking.addEventListener('url', this._handleOpenURL);
 
     DeviceEventEmitter.addListener("NotificationClick", docId => {
       if (docId) {
-        RNKunafa.appConfig.handleNotificationClick(docId, RNKunafa.AppStore);
+        this._handleClickNotification(docId);
       }
     });
     setTimeout(() => {
       RNKunafa.getInitialNotificationClickDocId(docId => {
         if (docId) {
-          RNKunafa.appConfig.handleNotificationClick(docId, RNKunafa.AppStore);
+          this._handleClickNotification(docId);
         }
       })
     }, 500);
+
+    setTimeout(() => {
+      this.setState({splash: false});
+    }, 600);
   }
   componentWillUnmount = () => {
     Linking.removeEventListener('url', this._handleOpenURL);
   }
-  _handleOpenURL = (event) => {
-    RNKunafa.appConfig.handleDeepLink(event.url, RNKunafa.AppStore);
+  _handleClickNotification = docId => {
+    const {notifications, clickExternalNotification} = this.props;
+    clickExternalNotification(notifications[docId].notification || {});
+  }
+  _handleOpenURL = ({url}) => {
+    const route = RNKunafa.appConfig.getDeepLinkRoute(url);
+    this.props.navigateTo(route.name, route.params);
   }
   renderActivityIndicator = () => {
     const {processingLocal} = this.props;
-    const color = RNKunafa.appConfig.progressBarColor(RNKunafa.AppStore);
+    const color = RNKunafa.appConfig.progressBarColor(RNKunafa.AppStore.getState);
     if (processingLocal.isProcessing) {
       return <Progress.Bar color={color} progress={processingLocal.progress} indeterminate={!processingLocal.progress} width={Dimensions.get('window').width}/>;
     }
@@ -76,10 +91,18 @@ class AppContainer extends Component {
   }
   render = () => {
     const {Main, route} = this.props;
-    const color = RNKunafa.appConfig.statusBarColor(RNKunafa.AppStore)
+    const color = RNKunafa.appConfig.statusBarColor(RNKunafa.AppStore.getState);
+    if (this.state.splash) {
+      return (
+        <View>
+          <StatusBar backgroundColor={color} animated={true}/>
+        </View>
+      );
+    }
     return (
       <View style={{
-        flex: 1
+        flex: 1,
+        backgroundColor: "white"
       }}>
         <StatusBar backgroundColor={color} animated={true}/>
         <Main route={route}/>
@@ -91,5 +114,5 @@ class AppContainer extends Component {
 }
 
 export default connect(state => {
-  return {processingLocal: state.processing_local, route: state.history[0], dialog: state.dialog}
+  return {processingLocal: state.processing_local, route: state.history[0], dialog: state.dialog, notifications: state.notifications}
 })(AppContainer);

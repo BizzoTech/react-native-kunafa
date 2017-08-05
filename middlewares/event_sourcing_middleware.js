@@ -39,7 +39,7 @@ export default(localOnlyActions, needLocalProcessing, getActionPreProcessors, ge
   const relevantDocsIds = getRelevantDocsIds(action);
   const shouldWaitForOtherAction = relevantDocsIds.some(docId => localProcessingDocumentsIds.includes(docId));
 
-  const localOnly = needLocalProcessing(action) || shouldWaitForOtherAction;
+  const localOnly = needLocalProcessing.includes(action) || shouldWaitForOtherAction;
   const _id = state.currentProfile._id
    ? `${state.currentProfile._id}-${Date.now()}-${action.type}`
    : `anonymous-${info.device_unique_id}-${Date.now()}-${action.type}`;

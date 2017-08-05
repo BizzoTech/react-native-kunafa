@@ -58,13 +58,10 @@ export default(name, MAIN, appConfig) => {
             });
 
             setTimeout(() => {
-              RNKunafa.appConfig.initialFetch(RNKunafa.AppStore);
+              const initialActions = RNKunafa.appConfig.getInitialActions(RNKunafa.AppStore.getState);
+              initialActions.forEach(RNKunafa.AppStore.dispatch);
             }, 500);
-
-            setTimeout(() => {
-              this.setState({splash: false});
-            }, 500)
-
+            this.setState({splash: false});
           })
         } else {
           setTimeout(this.checkListner, 100);
@@ -76,14 +73,9 @@ export default(name, MAIN, appConfig) => {
         return <View/>;
       }
       return (
-        <View style={{
-          flex: 1,
-          backgroundColor: "white"
-        }}>
-          <Provider store={RNKunafa.AppStore}>
-            <AppContainer Main={MAIN}/>
-          </Provider>
-        </View>
+        <Provider store={RNKunafa.AppStore}>
+          <AppContainer Main={MAIN}/>
+        </Provider>
       )
     }
   }
