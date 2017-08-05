@@ -6,7 +6,7 @@ import {
 
 import R from 'ramda';
 
-export default processLocalEvent => store => next => action => {
+export default ({processLocalEvent}) => store => next => action => {
   if (action.type === 'PROCESS_LOCAL_ONLY') {
     NetInfo.isConnected.fetch().then(isConnected => {
 			//console.log('First, is ' + (isConnected ? 'online' : 'offline'));

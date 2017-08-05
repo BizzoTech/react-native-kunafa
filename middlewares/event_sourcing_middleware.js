@@ -29,7 +29,7 @@ const info = {
  build_type: Config.BUILD_TYPE
 }
 
-export default(localOnlyActions, needLocalProcessing, getActionPreProcessors, getActionPostProcessors, getRelevantDocsIds) => {
+export default({localOnlyActions, needLocalProcessing, getActionPreProcessors, getActionPostProcessors, getRelevantDocsIds}) => {
  const createClientAction = (action, state) => {
   const eventsList = R.values(state.events);
   const events_size = eventsList.length;

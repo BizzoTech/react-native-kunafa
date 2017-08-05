@@ -31,11 +31,11 @@ export default config => {
     }
   }, config.syncPaths || []));
 
-  const eventSourcingMiddleware = createEventSourcingMiddleware(config.localOnlyActions, config.needLocalProcessing, config.getActionPreProcessors, config.getActionPostProcessors, config.getRelevantDocsIds)
+  const eventSourcingMiddleware = createEventSourcingMiddleware(config);
 
-  const localCacheMiddleware = createLocalCacheMiddleware(config.cacheDocTypes, config.cacheLimit, config.keepInCache);
+  const localCacheMiddleware = createLocalCacheMiddleware(config);
 
-  const processLocalEventsMiddleware = createProcessLocalEventsMiddleware(config.processLocalEvent);
+  const processLocalEventsMiddleware = createProcessLocalEventsMiddleware(config);
 
   return [processLocalEventsMiddleware, localCacheMiddleware, eventSourcingMiddleware, syncMiddleware, eventChangeHandlerMiddleware];
 }
