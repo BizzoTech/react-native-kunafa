@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {DeviceEventEmitter, AppRegistry, View, Linking} from 'react-native';
+import {AppRegistry, View} from 'react-native';
 import {Provider} from 'react-redux';
 import Config from 'react-native-config';
 

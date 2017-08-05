@@ -5,6 +5,7 @@ import {
   View,
   StatusBar,
   Linking,
+  DeviceEventEmitter,
   Dimensions
 } from 'react-native';
 import R from 'ramda';
