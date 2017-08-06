@@ -1,8 +1,8 @@
 import R from 'ramda';
 import Config from 'react-native-config';
 import {
-	DeviceEventEmitter,
-	NativeModules
+  DeviceEventEmitter,
+  NativeModules
 } from 'react-native';
 const RNKunafa = NativeModules.RNKunafa;
 
@@ -22,7 +22,7 @@ export default config => {
 
   const syncMiddleware = createSyncMiddleware(localListnerUrl, R.append({
     name: "events",
-    filter: function(doc) {
+    filter: function (doc) {
       return doc.type == "EVENT"; // & !doc.appliedOnClient;
     },
     actions: {

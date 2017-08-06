@@ -114,5 +114,10 @@ class AppContainer extends Component {
 }
 
 export default connect(state => {
-  return {processingLocal: state.processing_local, route: state.history[0], dialog: state.dialog, notifications: state.notifications}
+  return {
+    processingLocal: state.processing_local,
+    route: state.history[0],
+    dialog: state.dialog,
+    notifications: state.notifications
+  }
 })(AppContainer);

@@ -19,7 +19,7 @@ const login = async(hostUrl, user) => {
       'Content-Type': 'application/json'
     }
   });
-  if (response.status == 200) {
+  if(response.status == 200) {
     return response.json();
   } else {
     console.log(response);
@@ -35,7 +35,7 @@ const fetchUser = async(hostUrl, user_id) => {
       'Accept': 'application/json'
     }
   });
-  if (response.status == 200) {
+  if(response.status == 200) {
     return response.json();
   } else {
     throw new Error("Request Error");
@@ -65,7 +65,7 @@ export const userLogin = (name, password, event) => {
     })
     auth(name, password).then(user => {
       RNKunafa.login(name, password, user.profileId);
-      if(event){
+      if(event) {
         dispatch(event.action);
       } else {
         dispatch(RNKunafa.actions.reLoadDoc({
