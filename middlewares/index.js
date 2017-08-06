@@ -11,7 +11,7 @@ import createEventSourcingMiddleware from './event_sourcing_middleware';
 import createLocalCacheMiddleware from './local_cache_middleware';
 import createProcessLocalEventsMiddleware from './process_local_events_middleware';
 
-import createClickNotificationMiddleware from './click_notifiaction_middleware';
+import createClickNotificationMiddleware from './click_notification_middleware';
 
 import eventChangeHandlerMiddleware from './event_change_handler_middleware';
 
@@ -41,5 +41,5 @@ export default config => {
 
   const clickNotificationMiddleware = createClickNotificationMiddleware(config);
 
-  return [processLocalEventsMiddleware, localCacheMiddleware, eventSourcingMiddleware, syncMiddleware, eventChangeHandlerMiddleware];
+  return [processLocalEventsMiddleware, localCacheMiddleware, eventSourcingMiddleware, syncMiddleware, eventChangeHandlerMiddleware, clickNotificationMiddleware];
 }
