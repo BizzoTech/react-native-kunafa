@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {AppRegistry, View} from 'react-native';
 import {Provider} from 'react-redux';
 import Config from 'react-native-config';
+import R from 'ramda';
 
 const FBSDK = require('react-native-fbsdk');
 const {LoginButton, AccessToken, LoginManager} = FBSDK;
@@ -12,7 +13,6 @@ PouchDB.plugin(require('pouchdb-find'));
 import createStore from 'kunafa-client/createStore';
 
 import RNKunafa from './RNKunafa';
-import createStore from './createStore';
 import actions from './actions';
 
 import pkgMiddlewares from './middlewares';
@@ -81,10 +81,10 @@ export default(name, MAIN, appConfig) => {
               profileId,
               port,
               reducers: {
-                ...config.appReducers,
+                ...appConfig.appReducers,
                 ...pkgReducers
               },
-              middlewares: [...config.appMiddlewares, ...pkgMiddlewares],
+              middlewares: [...appConfig.appMiddlewares, ...pkgMiddlewares],
               localListnerUrl,
               paths
             });
