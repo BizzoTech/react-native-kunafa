@@ -77,7 +77,7 @@ const syncChanges = (db, paths, store, dispatch) => {
   return changes;
 }
 
-export default(localListnerUrl, paths) => store => next => {
+export default({localListnerUrl, paths}) => store => next => {
 
   const dbName = store.getState().currentProfile._id || "anonymous";
   const localDbUrl = localListnerUrl + dbName + "-" + Config.BUILD_TYPE;

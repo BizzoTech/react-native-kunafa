@@ -2,7 +2,7 @@ import R from 'ramda';
 
 import RNKunafa from '../RNKunafa';
 
-export default store => next => action => {
+export default config => store => next => action => {
 
   let result = next(action);
 

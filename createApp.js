@@ -9,9 +9,15 @@ const {LoginButton, AccessToken, LoginManager} = FBSDK;
 import PouchDB from 'pouchdb';
 PouchDB.plugin(require('pouchdb-find'));
 
+import createStore from 'kunafa-client/createStore';
+
 import RNKunafa from './RNKunafa';
 import createStore from './createStore';
 import actions from './actions';
+
+import pkgMiddlewares from './middlewares';
+
+import pkgReducers from './reducers';
 
 import AppContainer from './AppContainer';
 
@@ -51,10 +57,36 @@ export default(name, MAIN, appConfig) => {
             if (!profileId) {
               LoginManager.logOut();
             }
+
+            const localUsername = Config.LOCAL_USERNAME || "kunafa";
+            const localPassword = Config.LOCAL_PASSWORD || "kunafa";
+
+            const localListnerUrl = `http://${localUsername}:${localPassword}@127.0.0.1:${port}/`;
+
+            const paths = R.append({
+              name: "events",
+              filter: function (doc) {
+                return doc.type == "EVENT"; // & !doc.appliedOnClient;
+              },
+              actions: {
+                remove: 'REMOVE_EVENT',
+                update: 'UPDATE_EVENT',
+                insert: 'ADD_EVENT',
+                load: 'LOAD_EVENTS'
+              }
+            }, appConfig.syncPaths || [])
+
             RNKunafa.AppStore = createStore({
-              ...RNKunafa.appConfig,
+              ...appConfig,
               profileId,
-              port
+              port,
+              reducers: {
+                ...config.appReducers,
+                ...pkgReducers
+              },
+              middlewares: [...config.appMiddlewares, ...pkgMiddlewares],
+              localListnerUrl,
+              paths
             });
 
             setTimeout(() => {

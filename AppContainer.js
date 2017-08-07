@@ -6,7 +6,9 @@ import {
   StatusBar,
   Linking,
   DeviceEventEmitter,
-  Dimensions
+  Dimensions,
+  BackHandler,
+  NetInfo
 } from 'react-native';
 import R from 'ramda';
 import PopupDialog, {DialogTitle, SlideAnimation} from 'react-native-popup-dialog';
@@ -27,6 +29,24 @@ class AppContainer extends Component {
     }
   }
   componentDidMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      if(this.props.history.length > 1) {
+        this.props.goBack();
+        return true;
+      }
+      return false;
+    });
+
+    setInterval(async() => {
+      const {events, processingLocal, processLocalOnly} = this.props;
+      const hasLocalEvents = R.values(events).some(R.prop('localOnly'));
+      const isProcessing = processingLocal.isProcessing;
+      const isConnected = await NetInfo.isConnected.fetch();
+      if(hasLocalEvents && !isProcessing && isConnected) {
+        processLocalOnly();
+      }
+    }, 1000);
+
     Linking.getInitialURL().then((url) => {
       if (url) {
         this._handleOpenURL({url});
@@ -90,7 +110,7 @@ class AppContainer extends Component {
     return RNKunafa.appConfig.renderDialogContent(dialog, closeDialog);
   }
   render = () => {
-    const {Main, route} = this.props;
+    const {Main, history} = this.props;
     const color = RNKunafa.appConfig.statusBarColor(RNKunafa.AppStore.getState);
     if (this.state.splash) {
       return (
@@ -105,7 +125,7 @@ class AppContainer extends Component {
         backgroundColor: "white"
       }}>
         <StatusBar backgroundColor={color} animated={true}/>
-        <Main route={route}/>
+        <Main route={history[0]}/>
         {this.renderActivityIndicator()}
         {this.renderDialog()}
       </View>
@@ -115,9 +135,18 @@ class AppContainer extends Component {
 
 export default connect(state => {
   return {
+    events: state.events,
     processingLocal: state.processing_local,
-    route: state.history[0],
+    history: state.history,
     dialog: state.dialog,
     notifications: state.notifications
+  }
+}, dispatch => {
+  return {
+    processLocalOnly: () => {
+      dispatch({
+        type: 'PROCESS_LOCAL_ONLY'
+      });
+    }
   }
 })(AppContainer);
