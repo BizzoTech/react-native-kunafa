@@ -29,7 +29,7 @@ const info = {
  build_type: Config.BUILD_TYPE
 }
 
-export default({localOnlyActions, needLocalProcessing, getActionPreProcessors, getActionPostProcessors, getRelevantDocsIds}) => {
+export default(store, {localOnlyActions, needLocalProcessing, getActionPreProcessors, getActionPostProcessors, getRelevantDocsIds}) => {
  const createClientAction = (action, state) => {
   const eventsList = R.values(state.events);
   const events_size = eventsList.length;
@@ -61,7 +61,7 @@ export default({localOnlyActions, needLocalProcessing, getActionPreProcessors, g
   }
  }
 
- return store => next => action => {
+ return next => action => {
 
   if (!localOnlyActions.includes(action.type) && action.type !== 'ADD_PROFILE') {
    InteractionManager.runAfterInteractions(() => {

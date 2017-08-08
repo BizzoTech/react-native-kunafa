@@ -17,11 +17,11 @@ const removeOldDocs = async(cacheDocTypes, cacheLimit, keepInCache, state) => {
   }
 }
 
-export default({
+export default(store, {
   cacheDocTypes,
   cacheLimit,
   keepInCache
-}) => store => next => {
+}) => next => {
   setTimeout(async() => {
     const keys = await SimpleStore.keys();
     const items = await SimpleStore.get(keys);
