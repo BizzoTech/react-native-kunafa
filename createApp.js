@@ -14,6 +14,8 @@ import createStore from 'kunafa-client/createStore';
 
 import RNKunafa from './RNKunafa';
 import actions from './actions';
+import documentsActions from 'kunafa-client/actions/createDocumentsActions';
+
 
 import pkgMiddlewares from './middlewares';
 
@@ -78,8 +80,13 @@ export default(name, MAIN, appConfig) => {
 
             RNKunafa.AppStore = createStore({
               ...appConfig,
+              ...Config,
               profileId,
               port,
+              actions: {
+                ...appConfig.appActions,
+                ...documentsActions(Config)
+              },
               reducers: {
                 ...appConfig.appReducers,
                 ...pkgReducers
@@ -88,6 +95,8 @@ export default(name, MAIN, appConfig) => {
               localListnerUrl,
               paths
             });
+
+            //RNKunafa.AppStore.actions = appConfig.appActions;
 
             setTimeout(() => {
               const initialActions = RNKunafa.appConfig.getInitialActions(RNKunafa.AppStore.getState);
