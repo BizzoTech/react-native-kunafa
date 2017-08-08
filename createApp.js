@@ -55,6 +55,7 @@ export default(name, MAIN, appConfig) => {
 
             const localListnerUrl = `http://${localUsername}:${localPassword}@127.0.0.1:${port}/`;
 
+
             const paths = R.append({
               name: "events",
               filter: function (doc) {
@@ -82,7 +83,10 @@ export default(name, MAIN, appConfig) => {
                 ...pkgReducers
               },
               middlewares: [...appConfig.appMiddlewares, ...pkgMiddlewares],
-              localListnerUrl,
+              getLocalDbUrl: profileId => {
+                const dbName = profileId || "anonymous";
+                return localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
+              },
               paths
             }
 
