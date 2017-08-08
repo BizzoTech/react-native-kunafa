@@ -84,8 +84,7 @@ export default(name, MAIN, appConfig) => {
               profileId,
               port,
               actions: {
-                ...appConfig.appActions,
-                ...documentsActions(Config)
+                ...appConfig.appActions
               },
               reducers: {
                 ...appConfig.appReducers,
