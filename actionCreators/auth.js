@@ -57,7 +57,7 @@ export const startLoading = () => {
   }
 }
 
-export const userLogin = (name, password, event) => {
+export const userLogin = (name, password, event, actionCreators) => {
   return dispatch => {
 
     dispatch({
@@ -68,7 +68,7 @@ export const userLogin = (name, password, event) => {
       if(event) {
         dispatch(event.action);
       } else {
-        dispatch(RNKunafa.actions.reLoadDoc({
+        dispatch(actionCreators.reLoadDoc({
           _id: user.profileId
         }));
       }

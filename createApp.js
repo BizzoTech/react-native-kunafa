@@ -13,9 +13,7 @@ PouchDB.plugin(require('pouchdb-find'));
 import createStore from 'kunafa-client/createStore';
 
 import RNKunafa from './RNKunafa';
-import actions from './actions';
-import documentsActions from 'kunafa-client/actions/createDocumentsActions';
-
+import actionCreators from './actionCreators';
 
 import pkgMiddlewares from './middlewares';
 
@@ -24,14 +22,6 @@ import pkgReducers from './reducers';
 import AppContainer from './AppContainer';
 
 export default(name, MAIN, appConfig) => {
-  RNKunafa.appConfig = {
-    ...appConfig,
-    ...Config
-  }
-  RNKunafa.actions = {
-    ...actions,
-    ...appConfig.appActions
-  }
   RNKunafa.AppStore = null;
   class App extends Component {
     constructor(props) {
@@ -76,15 +66,16 @@ export default(name, MAIN, appConfig) => {
                 insert: 'ADD_EVENT',
                 load: 'LOAD_EVENTS'
               }
-            }, appConfig.syncPaths || [])
+            }, appConfig.syncPaths || []);
 
-            RNKunafa.AppStore = createStore({
+            const config = {
               ...appConfig,
               ...Config,
               profileId,
               port,
-              actions: {
-                ...appConfig.appActions
+              actionCreators: {
+                ...actionCreators,
+                ...appConfig.appActionCreators
               },
               reducers: {
                 ...appConfig.appReducers,
@@ -93,14 +84,12 @@ export default(name, MAIN, appConfig) => {
               middlewares: [...appConfig.appMiddlewares, ...pkgMiddlewares],
               localListnerUrl,
               paths
-            });
+            }
 
-            //RNKunafa.AppStore.actions = appConfig.appActions;
+            const AppStore = createStore(config);
+            RNKunafa.AppStore = AppStore;
+            RNKunafa.appConfig = config;
 
-            setTimeout(() => {
-              const initialActions = RNKunafa.appConfig.getInitialActions(RNKunafa.AppStore.getState);
-              initialActions.forEach(RNKunafa.AppStore.dispatch);
-            }, 500);
             this.setState({splash: false});
           })
         } else {
