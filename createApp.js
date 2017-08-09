@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, View} from 'react-native';
+import {AppRegistry, View, NetInfo} from 'react-native';
 import {Provider} from 'react-redux';
 import Config from 'react-native-config';
 import R from 'ramda';
@@ -14,10 +14,6 @@ import createStore from 'kunafa-client/createStore';
 
 import RNKunafa from './RNKunafa';
 import actionCreators from './actionCreators';
-
-import pkgMiddlewares from './middlewares';
-
-import pkgReducers from './reducers';
 
 import AppContainer from './AppContainer';
 
@@ -81,18 +77,18 @@ export default(name, MAIN, appConfig) => {
                 ...actionCreators,
                 ...appConfig.appActionCreators
               },
-              reducers: {
-                ...appConfig.appReducers,
-                ...pkgReducers
-              },
-              middlewares: [...appConfig.appMiddlewares, ...pkgMiddlewares],
+              reducers: appConfig.appReducers,
+              middlewares: appConfig.appMiddlewares,
               getLocalDbUrl: profileId => {
                 const dbName = profileId || "anonymous";
                 return localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
               },
               paths,
               deviceInfo,
-              cacheStore
+              cacheStore,
+              isConnected: async() => {
+                return await NetInfo.isConnected.fetch();
+              }
             }
 
             const AppStore = createStore(config);
