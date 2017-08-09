@@ -22,6 +22,7 @@ import pkgReducers from './reducers';
 import AppContainer from './AppContainer';
 
 import deviceInfo from './device_info';
+import cacheStore from './cacheStore';
 
 export default(name, MAIN, appConfig) => {
   RNKunafa.AppStore = null;
@@ -90,7 +91,8 @@ export default(name, MAIN, appConfig) => {
                 return localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
               },
               paths,
-              deviceInfo
+              deviceInfo,
+              cacheStore
             }
 
             const AppStore = createStore(config);
