@@ -7,7 +7,7 @@
     "blob-polyfill": "^1.0.20150320",
     "bluebird": "^3.4.7",
     "events": "^1.1.1",
-    "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#1ee8286eb70d27939bd9e90d8b68ffdddea6e994",
+    "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#e93a4beca38f272b99b9fe8bcee16f5d68381bbf",
     "react-native-config": "^0.4.2",
     "react-native-device-info": "^0.10.0",
     "react-native-popup-dialog": "^0.7.29",
