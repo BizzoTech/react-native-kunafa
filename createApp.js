@@ -21,6 +21,8 @@ import pkgReducers from './reducers';
 
 import AppContainer from './AppContainer';
 
+import deviceInfo from './device_info';
+
 export default(name, MAIN, appConfig) => {
   RNKunafa.AppStore = null;
   class App extends Component {
@@ -87,7 +89,8 @@ export default(name, MAIN, appConfig) => {
                 const dbName = profileId || "anonymous";
                 return localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
               },
-              paths
+              paths,
+              deviceInfo
             }
 
             const AppStore = createStore(config);
