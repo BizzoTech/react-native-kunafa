@@ -57,7 +57,7 @@ export const startLoading = () => {
   }
 }
 
-export const userLogin = (name, password, event, actionCreators) => {
+export const userLogin = (name, password, event, {actionCreators}) => {
   return dispatch => {
 
     dispatch({
@@ -68,7 +68,7 @@ export const userLogin = (name, password, event, actionCreators) => {
       if(event) {
         dispatch(event.action);
       } else {
-        dispatch(actionCreators.reLoadDoc({
+        dispatch(actionCreators.fetchDoc({
           _id: user.profileId
         }));
       }

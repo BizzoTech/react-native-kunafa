@@ -54,20 +54,6 @@ export default(name, MAIN, appConfig) => {
 
             const localListnerUrl = `http://${localUsername}:${localPassword}@127.0.0.1:${port}/`;
 
-
-            const paths = R.append({
-              name: "events",
-              filter: function (doc) {
-                return doc.type == "EVENT"; // & !doc.appliedOnClient;
-              },
-              actions: {
-                remove: 'REMOVE_EVENT',
-                update: 'UPDATE_EVENT',
-                insert: 'ADD_EVENT',
-                load: 'LOAD_EVENTS'
-              }
-            }, appConfig.syncPaths || []);
-
             const config = {
               ...appConfig,
               ...Config,
@@ -83,7 +69,6 @@ export default(name, MAIN, appConfig) => {
                 const dbName = profileId || "anonymous";
                 return localListnerUrl + dbName + "-" + Config.BUILD_TYPE;
               },
-              paths,
               deviceInfo,
               cacheStore,
               isConnected: async() => {

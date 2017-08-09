@@ -7,8 +7,7 @@ import {
   Linking,
   DeviceEventEmitter,
   Dimensions,
-  BackHandler,
-  NetInfo
+  BackHandler
 } from 'react-native';
 import R from 'ramda';
 import PopupDialog, {DialogTitle, SlideAnimation} from 'react-native-popup-dialog';
@@ -36,16 +35,6 @@ class AppContainer extends Component {
       }
       return false;
     });
-
-    setInterval(async() => {
-      const {events, processingLocal, processLocalOnly} = this.props;
-      const hasLocalEvents = R.values(events).some(R.prop('localOnly'));
-      const isProcessing = processingLocal.isProcessing;
-      const isConnected = await NetInfo.isConnected.fetch();
-      if(hasLocalEvents && !isProcessing && isConnected) {
-        processLocalOnly();
-      }
-    }, 1000);
 
     Linking.getInitialURL().then((url) => {
       if (url) {
