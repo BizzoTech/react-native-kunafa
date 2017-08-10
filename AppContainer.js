@@ -86,7 +86,7 @@ class AppContainer extends Component {
           this.popup = popup
         }} dialogTitle={dialog.title
           ? <DialogTitle title={dialog.title}/>
-          : undefined} dialogAnimation={dialog.animated
+          : undefined} dialogAnimation={false
           ? new SlideAnimation({slideFrom: 'bottom', animationDuration: 300})
           : undefined}>
           {this.renderDialogContent()}
