@@ -1,13 +1,17 @@
 {
   "name": "react-native-kunafa",
   "version": "0.0.1",
-  "private": true,
+  "license" : "MIT",
+  "author": {
+    "name": "Emad Shaaban",
+    "email": "emad.shaaban92@gmail.com"
+  },
   "dependencies": {
     "base-64": "^0.1.0",
     "blob-polyfill": "^1.0.20150320",
     "bluebird": "^3.4.7",
     "events": "^1.1.1",
-    "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#cfb8ad78abebed2254414d514cb2d51c9f4ddec0",
+    "kunafa-client": "git+https://github.com/BizzoTech/kunafa-client#584ad4ed8ccbdf4c01d8007ca6f3a73afd3c8db7",
     "react-native-config": "^0.4.2",
     "react-native-device-info": "^0.10.0",
     "react-native-popup-dialog": "^0.9.32",

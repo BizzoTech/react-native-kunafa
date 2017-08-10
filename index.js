@@ -5,7 +5,7 @@ process.nextTick = setImmediate;
 
 import RNKunafa from './RNKunafa';
 import createApp from './createApp';
-import connect from 'kunafa-client/connect';
+import {connect} from 'kunafa-client';
 
 import FBLogin from './components/FBLogin';
 
