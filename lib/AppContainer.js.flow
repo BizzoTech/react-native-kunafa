@@ -65,7 +65,9 @@ class AppContainer extends Component {
   }
   _handleClickNotification = docId => {
     const {notifications, clickExternalNotification} = this.props;
-    clickExternalNotification(notifications[docId].notification || {});
+    if(notifications[docId]){
+      clickExternalNotification(notifications[docId].notification || {});
+    }
   }
   _handleOpenURL = ({url}) => {
     const route = RNKunafa.appConfig.getDeepLinkRoute(url);
