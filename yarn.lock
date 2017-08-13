@@ -1542,14 +1542,15 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
-"kunafa-client@git+https://github.com/BizzoTech/kunafa-client#bcd04c803ff06dce073be56ad73fa38c2a8dd889":
+"kunafa-client@git+https://github.com/BizzoTech/kunafa-client#db373c302be43d4bc20657fbb054ba972faa8050":
   version "0.0.1"
-  resolved "git+https://github.com/BizzoTech/kunafa-client#bcd04c803ff06dce073be56ad73fa38c2a8dd889"
+  resolved "git+https://github.com/BizzoTech/kunafa-client#db373c302be43d4bc20657fbb054ba972faa8050"
   dependencies:
     moment "^2.17.1"
     pouchdb "^6.2.0"
     pouchdb-find "^6.2.0"
     ramda "^0.24.0"
+    react-redux "^5.0.5"
     redux "^3.7.2"
     redux-thunk "^2.1.0"
     reselect "^3.0.1"
