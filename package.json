@@ -6,7 +6,7 @@
     "name": "Emad Shaaban",
     "email": "emad.shaaban92@gmail.com"
   },
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "transpile": "yarn run transpile:babel && yarn run transpile:flow",
     "transpile:babel": "rm -rf lib && babel -d lib src",
