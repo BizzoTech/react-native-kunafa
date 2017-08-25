@@ -1542,9 +1542,9 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
-"kunafa-client@git+https://github.com/BizzoTech/kunafa-client#db373c302be43d4bc20657fbb054ba972faa8050":
+"kunafa-client@git+https://github.com/BizzoTech/kunafa-client#b4444588f6a9a13e3497f369f9fad70b90c116a6":
   version "0.0.1"
-  resolved "git+https://github.com/BizzoTech/kunafa-client#db373c302be43d4bc20657fbb054ba972faa8050"
+  resolved "git+https://github.com/BizzoTech/kunafa-client#b4444588f6a9a13e3497f369f9fad70b90c116a6"
   dependencies:
     moment "^2.17.1"
     pouchdb "^6.2.0"
