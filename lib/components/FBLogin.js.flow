@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Dimensions} from 'react-native';
 import Config from 'react-native-config';
 
-import {connect} from 'kunafa-client';
+import {connect} from 'kunafa-client/src';
 
 const {height, width} = Dimensions.get('window');
 

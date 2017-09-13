@@ -16,7 +16,7 @@ import * as Progress from 'react-native-progress';
 
 const {height, width} = Dimensions.get('window');
 
-import {connect} from 'kunafa-client';
+import {connect} from 'kunafa-client/src';
 
 import RNKunafa from './RNKunafa';
 
