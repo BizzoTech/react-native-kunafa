@@ -17,7 +17,11 @@ import AppContainer from './AppContainer';
 import deviceInfo from './device_info';
 import cacheStore from './cacheStore';
 
+import I18n from 'react-native-i18n';
+I18n.fallbacks = true
+
 export default(name, MAIN, appConfig) => {
+  I18n.translations = appConfig.translations;
   RNKunafa.AppStore = null;
   class App extends Component {
     constructor(props) {
