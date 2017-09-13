@@ -8,7 +8,7 @@ import I18n from 'react-native-i18n';
 
 import RNKunafa from './RNKunafa';
 import createApp from './createApp';
-import {connect} from 'kunafa-client/src';
+import {connect} from 'kunafa-client';
 
 import FBLogin from './components/FBLogin';
 

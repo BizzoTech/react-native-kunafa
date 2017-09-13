@@ -7,7 +7,7 @@ import R from 'ramda';
 const FBSDK = require('react-native-fbsdk');
 const {LoginButton, AccessToken, LoginManager} = FBSDK;
 
-import {createStore} from 'kunafa-client/src';
+import {createStore} from 'kunafa-client';
 
 import RNKunafa from './RNKunafa';
 import actionCreators from './actionCreators';
